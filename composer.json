@@ -6,7 +6,10 @@
 	"license": "MIT",
 	"require": {
 		"php": "^7.3||^8.0",
-		"codeigniter4/framework": "^4"
+		"codeigniter4/framework": "^4",
+		"mpdf/mpdf": "^8.0",
+		"lossik/mikrotik-api": "^2.0",
+		"dite-code/mikrotik-api": "^1.1"
 	},
 	"require-dev": {
 		"fakerphp/faker": "^1.9",

@@ -1,0 +1,12 @@
+{
+	"name": "lossik/mikrotik-api",
+	"autoload": {
+		"psr-4": {
+			"Lossik\\Device\\Mikrotik\\Api\\": "src/"
+		}
+	},
+	"require": {
+		"lossik/device-communication": "~2.0",
+		"php": ">=7.1"
+	}
+}
