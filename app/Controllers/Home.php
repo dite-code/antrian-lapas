@@ -48,6 +48,18 @@
 		
 		public function index()
 		{
+			?>
+			<script>
+				//window.location.replace("<?= base_url(); ?>");
+				//setTimeout(function(){window.location.replace("<?= base_url(); ?>/kiosk");}, 1000);
+				//window.location.assign("https://www.w3schools.com")
+				setTimeout(function(){ window.location.assign("<?= base_url(); ?>/kiosk") }, 1000);
+			</script>
+			<?php
+		}
+		
+		public function kiosk()
+		{
 			$tanggal = date('Y-m-d');
 			$antrian = $this->tabelantrian->where("tanggal", $tanggal)->findAll();
 			if (count($antrian)==0){$antrian = $this->antrianbaru();}
@@ -111,7 +123,13 @@
 			$data['antrian']=$antrian[0];
 			return view('main-layout/wraper',$data);
 		}
-		
+
+		public function loket($no=1)
+		{
+			$data['title'] = ucfirst("Loket"); // Capitalize the first letter
+			$data['isi'] = "loket";
+			return view('main-layout/wraper-android',$data);
+		}
 
 		public function virtual($no=1)
 		{
@@ -131,19 +149,203 @@
 			$data['isi'] = "virtual";
 			return view('main-layout/wraper-android',$data);
 		}
+		
+		
+		public function addantrivirtual($id, $kode=0)
+		{
+			$data['id']=$id;
+			$data['antrivirtual']=$kode;
+			$this->tabelantrian->save($data);
+			echo "true";
+		}
+		
+		public function nextvirtual($id, $kode=0)
+		{
+			
+			$tanggal = date('Y-m-d');
+			$antrian = $this->tabelantrian->where("tanggal", $tanggal)->findAll();
+			if($kode<$antrian[0]['virtual']){
+				echo ($antrian[0]['antrivirtual']+1).",".$antrian[0]['virtual'];
+				$data['id']=$id;
+				$data['antrivirtual']=$antrian[0]['antrivirtual']+1;
+				$this->tabelantrian->save($data);
+				//echo ",".$kode;
+			}
+			else{ 
+				echo ($antrian[0]['antrivirtual']).",".$antrian[0]['virtual'];
+				echo ",false";
+			}
+		}
+		
+		public function getlastvirtual()
+		{
+			$tanggal = date('Y-m-d');
+			$antrian = $this->tabelantrian->where("tanggal", $tanggal)->findAll();
+			echo $antrian[0]['virtual'];
+		}
+
+
+		public function barang($no=1)
+		{
+			$tanggal = date('Y-m-d');
+			$antrian = $this->tabelantrian->where("tanggal", $tanggal)->findAll();
+			$prefixbarang = $this->rulebarang[strlen($antrian[0]['antribarang'])];
+			$barang=$prefixbarang.$antrian[0]['antribarang'];
+			$textbarang=$barang[0].",. ".$barang[1]." ".$barang[2]." ".$barang[3];
+	
+			if (count($antrian)==0){$antrian = $this->antrianbaru();}
+			$data['antrian']=$antrian[0];
+			$data['nowbp']=$no;
+			$data['prefixbarang']=$prefixbarang;
+			$data['textbarang']=$textbarang;
+			$data['rulebarang']=$this->rulebarang;
+			$data['title'] = ucfirst("barang"); // Capitalize the first letter
+			$data['isi'] = "barang";
+			return view('main-layout/wraper-android',$data);
+		}
+		
+		
+		public function addantribarang($id, $kode=0)
+		{
+			$data['id']=$id;
+			$data['antribarang']=$kode;
+			$this->tabelantrian->save($data);
+			echo "true";
+		}
+		
+		public function nextbarang($id, $kode=0)
+		{
+			
+			$tanggal = date('Y-m-d');
+			$antrian = $this->tabelantrian->where("tanggal", $tanggal)->findAll();
+			if($kode<$antrian[0]['barang']){
+				echo ($antrian[0]['antribarang']+1).",".$antrian[0]['barang'];
+				$data['id']=$id;
+				$data['antribarang']=$antrian[0]['antribarang']+1;
+				$this->tabelantrian->save($data);
+				//echo ",".$kode;
+			}
+			else{ 
+				echo ($antrian[0]['antribarang']).",".$antrian[0]['barang'];
+				echo ",false";
+			}
+		}
+		
+		public function getlastbarang()
+		{
+			$tanggal = date('Y-m-d');
+			$antrian = $this->tabelantrian->where("tanggal", $tanggal)->findAll();
+			echo $antrian[0]['barang'];
+		}
 
 		public function wbp($no=1)
 		{
 			$tanggal = date('Y-m-d');
 			$antrian = $this->tabelantrian->where("tanggal", $tanggal)->findAll();
+			$prefixwbp = $this->rulewbp[strlen($antrian[0]['antriwbp'])];
+			$wbp=$prefixwbp.$antrian[0]['antriwbp'];
+			$textwbp=$wbp[0].",. ".$wbp[1]." ".$wbp[2]." ".$wbp[3];
+	
 			if (count($antrian)==0){$antrian = $this->antrianbaru();}
 			$data['antrian']=$antrian[0];
 			$data['nowbp']=$no;
+			$data['prefixwbp']=$prefixwbp;
+			$data['textwbp']=$textwbp;
 			$data['rulewbp']=$this->rulewbp;
-			return view('main-layout/wraper',$data);
+			$data['title'] = ucfirst("wbp"); // Capitalize the first letter
+			$data['isi'] = "wbp";
+			return view('main-layout/wraper-android',$data);
+		}
+		
+		
+		public function addantriwbp($id, $kode=0)
+		{
+			$data['id']=$id;
+			$data['antriwbp']=$kode;
+			$this->tabelantrian->save($data);
+			echo "true";
+		}
+		
+		public function nextwbp($id, $kode=0)
+		{
+			
+			$tanggal = date('Y-m-d');
+			$antrian = $this->tabelantrian->where("tanggal", $tanggal)->findAll();
+			if($kode<$antrian[0]['wbp']){
+				echo ($antrian[0]['antriwbp']+1).",".$antrian[0]['wbp'];
+				$data['id']=$id;
+				$data['antriwbp']=$antrian[0]['antriwbp']+1;
+				$this->tabelantrian->save($data);
+				//echo ",".$kode;
+			}
+			else{ 
+				echo ($antrian[0]['antriwbp']).",".$antrian[0]['wbp'];
+				echo ",false";
+			}
+		}
+		
+		public function getlastwbp()
+		{
+			$tanggal = date('Y-m-d');
+			$antrian = $this->tabelantrian->where("tanggal", $tanggal)->findAll();
+			echo $antrian[0]['wbp'];
 		}
 
+
+		public function kantor($no=1)
+		{
+			$tanggal = date('Y-m-d');
+			$antrian = $this->tabelantrian->where("tanggal", $tanggal)->findAll();
+			$prefixkantor = $this->rulekantor[strlen($antrian[0]['antrikantor'])];
+			$kantor=$prefixkantor.$antrian[0]['antrikantor'];
+			$textkantor=$kantor[0].",. ".$kantor[1]." ".$kantor[2]." ".$kantor[3];
+	
+			if (count($antrian)==0){$antrian = $this->antrianbaru();}
+			$data['antrian']=$antrian[0];
+			$data['nowbp']=$no;
+			$data['prefixkantor']=$prefixkantor;
+			$data['textkantor']=$textkantor;
+			$data['rulekantor']=$this->rulekantor;
+			$data['title'] = ucfirst("kantor"); // Capitalize the first letter
+			$data['isi'] = "kantor";
+			return view('main-layout/wraper-android',$data);
+		}
 		
+		
+		public function addantrikantor($id, $kode=0)
+		{
+			$data['id']=$id;
+			$data['antrikantor']=$kode;
+			$this->tabelantrian->save($data);
+			echo "true";
+		}
+		
+		public function nextkantor($id, $kode=0)
+		{
+			
+			$tanggal = date('Y-m-d');
+			$antrian = $this->tabelantrian->where("tanggal", $tanggal)->findAll();
+			if($kode<$antrian[0]['kantor']){
+				echo ($antrian[0]['antrikantor']+1).",".$antrian[0]['kantor'];
+				$data['id']=$id;
+				$data['antrikantor']=$antrian[0]['antrikantor']+1;
+				$this->tabelantrian->save($data);
+				//echo ",".$kode;
+			}
+			else{ 
+				echo ($antrian[0]['antrikantor']).",".$antrian[0]['kantor'];
+				echo ",false";
+			}
+		}
+		
+		public function getlastkantor()
+		{
+			$tanggal = date('Y-m-d');
+			$antrian = $this->tabelantrian->where("tanggal", $tanggal)->findAll();
+			echo $antrian[0]['kantor'];
+		}
+
+	
 		public function wbp1($no=1)
 		{
 			$tanggal = date('Y-m-d');
@@ -170,17 +372,7 @@
 			return view('main-layout/wraper',$data);
 		}
 
-		public function kantor($no=1)
-		{
-			$tanggal = date('Y-m-d');
-			$antrian = $this->tabelantrian->where("tanggal", $tanggal)->findAll();
-			if (count($antrian)==0){$antrian = $this->antrianbaru();}
-			$data['antrian']=$antrian[0];
-			$data['rulekantor']=$this->rulekantor;
-			$data['title'] = ucfirst("Loket kantor"); // Capitalize the first letter
-			$data['isi'] = "kantor";
-			return view('main-layout/wraper',$data);
-		}
+
 		
 		public function addtts($id, $kode="")
 		{
@@ -228,91 +420,9 @@
 			$data['id']=$antrian[0]['id'];
 			$data['tts']="";
 			$this->tabelantrian->save($data);
-			echo $antrian[0]['antrivirtual']."|".$antrian[0]['antribarang']."|".$antrian[0]['antrikantor']."|".$antrian[0]['antrikantor']."|".$antrian[0]['tts'];
+			echo $antrian[0]['antrivirtual']."|".$antrian[0]['antribarang']."|".$antrian[0]['antriwbp']."|".$antrian[0]['antrikantor']."|".$antrian[0]['tts'];
 		}
 		
-		public function addantrivirtual($id, $kode=0)
-		{
-			$data['id']=$id;
-			$data['antrivirtual']=$kode;
-			$this->tabelantrian->save($data);
-			echo "true";
-		}
-		
-		public function nextvirtual($id, $kode=0)
-		{
-			
-			$tanggal = date('Y-m-d');
-			$antrian = $this->tabelantrian->where("tanggal", $tanggal)->findAll();
-			if($kode<$antrian[0]['virtual']){
-				echo ($antrian[0]['antrivirtual']+1).",".$antrian[0]['virtual'];
-				$data['id']=$id;
-				$data['antrivirtual']=$antrian[0]['antrivirtual']+1;
-				$this->tabelantrian->save($data);
-				//echo ",".$kode;
-			}
-			else{ 
-				echo ($antrian[0]['antrivirtual']).",".$antrian[0]['virtual'];
-				echo ",false";
-			}
-	
-		}
-		
-		public function getlastvirtual()
-		{
-			$tanggal = date('Y-m-d');
-			$antrian = $this->tabelantrian->where("tanggal", $tanggal)->findAll();
-			echo $antrian[0]['virtual'];
-		}
-
-		public function nextwbp($id, $kode=0)
-		{
-			
-			$tanggal = date('Y-m-d');
-			$antrian = $this->tabelantrian->where("tanggal", $tanggal)->findAll();
-			if($kode<$antrian[0]['wbp']){
-				echo ($antrian[0]['antriwbp']+1).",".$antrian[0]['wbp'];
-				$data['id']=$id;
-				$data['antriwbp']=$antrian[0]['antriwbp']+1;
-				$this->tabelantrian->save($data);
-				//echo ",".$kode;
-			}
-			else{ 
-				echo ($antrian[0]['antriwbp']).",".$antrian[0]['wbp'];
-				echo ",false";
-			}
-	
-		}
-		
-		public function getlastwbp()
-		{
-			$tanggal = date('Y-m-d');
-			$antrian = $this->tabelantrian->where("tanggal", $tanggal)->findAll();
-			echo $antrian[0]['wbp'];
-		}
-		
-		public function getlastkantor()
-		{
-			$tanggal = date('Y-m-d');
-			$antrian = $this->tabelantrian->where("tanggal", $tanggal)->findAll();
-			echo $antrian[0]['kantor'];
-		}
-		
-		public function addantrikantor($id, $kode=0)
-		{
-			$data['id']=$id;
-			$data['antrikantor']=$kode;
-			$this->tabelantrian->save($data);
-			echo "true";
-		}
-		
-		public function addantriwbp($id, $kode=0)
-		{
-			$data['id']=$id;
-			$data['antriwbp']=$kode;
-			$this->tabelantrian->save($data);
-			echo "true";
-		}
 		
 		public function login()
 		{
@@ -324,7 +434,7 @@
 		{
 			$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
-			'format' => [58, 210],
+			'format' => [58, 3276],
 			'orientation' => 'P',
 			'margin_top' => 2,
 			'margin_left' => 2,

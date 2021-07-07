@@ -22,7 +22,7 @@
 	<div class="row">
 		<div class="col-4 text-left">
 			<button type="button" class="btn btn-primary btn-lg round25 col-10" onclick="PrintWBP()">
-				<h3>PELAYANAN<BR>WBP<br><div id="txtwbp"><?= $prefixwbp.$antrian['wbp']; ?></div></h3>
+				<h3>PELAYANAN<BR>Integrasi<br><div id="txtwbp"><?= $prefixwbp.$antrian['wbp']; ?></div></h3>
 				<input type="hidden" id="nowbp" value="<?= $antrian['wbp']; ?>" />
 			</button>
 		</div>
@@ -146,6 +146,7 @@
 				alert(data);
 			}
 		}});
+		setTimeout(function(){ $('#aksi_print').modal("hide"); }, 3000);
 	}
 
 	function PrintWBP() {
@@ -167,6 +168,7 @@
 				alert(data);
 			}
 		}});
+		setTimeout(function(){ $('#aksi_print').modal("hide"); }, 3000);
 	}
 
 	function PrintKantor() {
@@ -188,6 +190,7 @@
 				alert(data);
 			}
 		}});
+		setTimeout(function(){ $('#aksi_print').modal("hide"); }, 3000);
 	}
 
 

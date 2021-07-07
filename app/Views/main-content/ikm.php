@@ -39,7 +39,7 @@
 				<b><div id="txtbarang" class="text60"><?= $prefixbarang.$antrian['antribarang']; ?></div></b>
 			</div>
 			<div class="col-12 text-center bg-warning m-2 round25">
-				<h3>Layanan WBP</h3>
+				<h3>Layanan Integrasi</h3>
 				<b><div id="txtwbp" class="text60"><?= $prefixwbp.$antrian['antriwbp']; ?></div></b>
 			</div>
 			<div class="col-12 text-center bg-warning m-2 round25">
@@ -104,7 +104,7 @@
 			//alert(data);
 			var databaru = data.split("|");
 			$('#txtvirtual').html(prefixvirtual[databaru[0].length]+databaru[0]);
-			$('#txtbanrang').html(prefixbarang[databaru[1].length]+databaru[1]);
+			$('#txtbarang').html(prefixbarang[databaru[1].length]+databaru[1]);
 			$('#txtwbp').html(prefixwbp[databaru[2].length]+databaru[2]);
 			$('#txtkantor').html(prefixkantor[databaru[3].length]+databaru[3]);
 			if (databaru[4]!=""){
@@ -116,7 +116,7 @@
 				//x.play();
 			}
 		}});
-	}, 3000);
+	}, 1000);
 		
 		
 		//setTimeout(responsiveVoice.speak("Test Suara Sukses", "Indonesian Female"),50);

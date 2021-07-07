@@ -4,30 +4,30 @@
 			<button id="btnext" type="button" class="btn btn-success btn-lg round25 col-12" onclick="berikutnya()" disabled>
 				<h2>Panggil Antrian</h2>
 				<p class="card-text">Berikutnya</p>
-				<h1 id="prefixantriannext"><?= $prefixkantor.($antrian['antrikantor']+1); ?></h1>
+				<h1 id="prefixantriannext"><?= $prefixbarang.($antrian['antribarang']+1); ?></h1>
 			</button>
 		</div>
 		<div class="col-12 text-center p-3">
-			<input id="antrian" type="hidden" value="<?= $antrian['antrikantor'];?>">
-			<input id="antrianmax" type="hidden" value="<?= $antrian['kantor'];?>">
-			<button type="button" class="btn btn-light btn-lg round25 col-12" onclick="play('Antrian Nomor. <?= $textkantor;?>, Silahkan ke Teler 1.')">
+			<input id="antrian" type="hidden" value="<?= $antrian['antribarang'];?>">
+			<input id="antrianmax" type="hidden" value="<?= $antrian['barang'];?>">
+			<button type="button" class="btn btn-light btn-lg round25 col-12" onclick="play('Antrian Nomor. <?= $textbarang;?>, Silahkan ke Teler 1.')">
 				<h2>Panggil Antrian</h2>
-				<p class="card-text">Antrian kantor</p>
-				<h1><div id="prefixantrian" class="d-inline" ><?= $prefixkantor.$antrian['antrikantor']; ?></div>/<div id="prefixantrianmax" class="d-inline" ><?= $prefixkantor.$antrian['kantor']; ?></div></h1>
+				<p class="card-text">Antrian barang</p>
+				<h1><div id="prefixantrian" class="d-inline" ><?= $prefixbarang.$antrian['antribarang']; ?></div>/<div id="prefixantrianmax" class="d-inline" ><?= $prefixbarang.$antrian['barang']; ?></div></h1>
 			</button>
 		</div>
 		<div class="col-12 text-center p-3">
 			<button type="button" class="btn btn-warning btn-lg round25 col-12" onclick="sebelumnya()">
 				<h2>Pilih Antrian</h2>
 				<p class="card-text">Sebelumnya</p>
-				<h1 id="prefixantrianprev"><?= $prefixkantor.($antrian['antrikantor']-1); ?></h1>
+				<h1 id="prefixantrianprev"><?= $prefixbarang.($antrian['antribarang']-1); ?></h1>
 			</button>
 		</div>
 	</div>
 </div>
 <br>
 <script>
-	var prefix = ['','D00','D0','D'];
+	var prefix = ['','B00','B0','B'];
 	var antrian = $('#antrian');
 	var antrianmax = $('#antrianmax');
 	
@@ -35,14 +35,14 @@
 		//alert($('#antrian').val());
 		var len = antrian.val().length;
 		noantri = prefix[len]+antrian.val(); 
-		var txt = "Antrian Nomor. "+ noantri[0] + ",. "+noantri[1]+" "+noantri[2]+" "+noantri[3]+", Silahkan ke Loket Tamu Dinas.";
+		var txt = "Antrian Nomor. "+ noantri[0] + ",. "+noantri[1]+" "+noantri[2]+" "+noantri[3]+", Silahkan ke Loket Penitipan Barang.";
 		//alert(txt);
 		
 		//tts(txt);
 		//alert("<?= base_url(); ?>/addtts/<?= $antrian['id'];?>/"+txt,);
 		$.ajax({url: "<?= base_url(); ?>/addtts/<?= $antrian['id'];?>/"+txt, success: function(data){ if(data!="true"){alert(data);}}});
 		
-		//$.ajax({url: "<?= base_url(); ?>/addantrikantor/<?= $antrian['id'].'/';?>"+antrian.val(), success: function(data){		//alert("data");}});
+		//$.ajax({url: "<?= base_url(); ?>/addantribarang/<?= $antrian['id'].'/';?>"+antrian.val(), success: function(data){		//alert("data");}});
 	}
 
 	function tts(txt){
@@ -62,7 +62,7 @@
 		var a = parseInt(antrian.val());
 		var b = parseInt(antrianmax.val());
 		
-		$.ajax({url: "<?= base_url(); ?>/nextkantor/<?= $antrian['id'].'/';?>"+(a), success: function(data){
+		$.ajax({url: "<?= base_url(); ?>/nextbarang/<?= $antrian['id'].'/';?>"+(a), success: function(data){
 			//alert(data);
 			var databaru = data.split(",");;
 			antrian.val(databaru[0]);
@@ -77,8 +77,8 @@
 			}
 			var len = antrian.val().length;
 			noantri = prefix[len]+antrian.val(); 
-			var txt = "Antrian Nomor. "+ noantri[0] + ",. "+noantri[1]+" "+noantri[2]+" "+noantri[3]+", Silahkan ke Loket Tamu Dinas.";
-			//var txt = "kantor"+noantri[1]+noantri[2]+noantri[3];
+			var txt = "Antrian Nomor. "+ noantri[0] + ",. "+noantri[1]+" "+noantri[2]+" "+noantri[3]+", Silahkan ke Loket Penitipan Barang.";
+			//var txt = "barang"+noantri[1]+noantri[2]+noantri[3];
 			//tts(txt);
 			$.ajax({url: "<?= base_url(); ?>/addtts/<?= $antrian['id'];?>/"+txt, success: function(data){ if(data!="true"){alert(data);}}});
 			
@@ -111,7 +111,7 @@
 	}
 	
 	setInterval(function(){
-		$.ajax({url: "<?= base_url(); ?>/getlastkantor", success: function(data){
+		$.ajax({url: "<?= base_url(); ?>/getlastbarang", success: function(data){
 			//alert(data);
 			var a = parseInt(data);
 			var len = data.length;

@@ -1,38 +1,33 @@
-<?php 
-	$prefixwbp = $rulewbp[strlen($antrian['antriwbp'])];
-	$wbp=$prefixwbp.$antrian['antriwbp'];
-	$textwbp=$wbp[0].",. ".$wbp[1]." ".$wbp[2]." ".$wbp[3];
-?>
 <div class="container">
 	<div class="row">
 		<div class="col-12 text-center p-3">
+			<button id="btnext" type="button" class="btn btn-success btn-lg round25 col-12" onclick="berikutnya()" disabled>
+				<h2>Panggil Antrian</h2>
+				<p class="card-text">Berikutnya</p>
+				<h1 id="prefixantriannext"><?= $prefixwbp.($antrian['antriwbp']+1); ?></h1>
+			</button>
+		</div>
+		<div class="col-12 text-center p-3">
 			<input id="antrian" type="hidden" value="<?= $antrian['antriwbp'];?>">
 			<input id="antrianmax" type="hidden" value="<?= $antrian['wbp'];?>">
-			<button type="button" class="btn btn-light btn-lg round25" onclick="play('Antrian Nomor. <?= $textwbp;?>, Silahkan ke Teler 1.')">
-				<h1>Panggil Antrian</h1>
-				<p class="card-text">Antrian WBP</p>
+			<button type="button" class="btn btn-light btn-lg round25 col-12" onclick="play()">
+				<h2>Panggil Antrian</h2>
+				<p class="card-text">Antrian Integrasi</p>
 				<h1><div id="prefixantrian" class="d-inline" ><?= $prefixwbp.$antrian['antriwbp']; ?></div>/<div id="prefixantrianmax" class="d-inline" ><?= $prefixwbp.$antrian['wbp']; ?></div></h1>
 			</button>
 		</div>
-		<div class="col-6 text-center">
-			<button type="button" class="btn btn-warning btn-lg round25" onclick="sebelumnya()">
-				<h1>Pilih Antrian</h1>
+		<div class="col-12 text-center p-3">
+			<button type="button" class="btn btn-warning btn-lg round25 col-12" onclick="sebelumnya()">
+				<h2>Pilih Antrian</h2>
 				<p class="card-text">Sebelumnya</p>
 				<h1 id="prefixantrianprev"><?= $prefixwbp.($antrian['antriwbp']-1); ?></h1>
-			</button>
-		</div>
-		<div class="col-6 text-center">
-			<button id="btnext" type="button" class="btn btn-success btn-lg round25" onclick="berikutnya()">
-				<h1>Pilih Antrian</h1>
-				<p class="card-text">Berikutnya</p>
-				<h1 id="prefixantriannext"><?= $prefixwbp.($antrian['antriwbp']+1); ?></h1>
 			</button>
 		</div>
 	</div>
 </div>
 <br>
 <script>
-	var prefix = ['','A00','A0','A'];
+	var prefix = ['','C00','C0','C'];
 	var antrian = $('#antrian');
 	var antrianmax = $('#antrianmax');
 	
@@ -40,10 +35,13 @@
 		//alert($('#antrian').val());
 		var len = antrian.val().length;
 		noantri = prefix[len]+antrian.val(); 
-		var txt = "Antrian Nomor. "+ noantri[0] + ",. "+noantri[1]+" "+noantri[2]+" "+noantri[3]+", Silahkan ke Loket 1.";
+		var txt = "Antrian Nomor. "+ noantri[0] + ",. "+noantri[1]+" "+noantri[2]+" "+noantri[3]+", Silahkan ke Loket Pelayanan Integrasi.";
 		//alert(txt);
 		
-		tts(txt);
+		//tts(txt);
+		//alert("<?= base_url(); ?>/addtts/<?= $antrian['id'];?>/"+txt,);
+		$.ajax({url: "<?= base_url(); ?>/addtts/<?= $antrian['id'];?>/"+txt, success: function(data){ if(data!="true"){alert(data);}}});
+		
 		//$.ajax({url: "<?= base_url(); ?>/addantriwbp/<?= $antrian['id'].'/';?>"+antrian.val(), success: function(data){		//alert("data");}});
 	}
 
@@ -57,7 +55,6 @@
 				volume: 1
 			}
 		);
-
 	}
 
 	function berikutnya()
@@ -80,8 +77,11 @@
 			}
 			var len = antrian.val().length;
 			noantri = prefix[len]+antrian.val(); 
-			var txt = "Antrian Nomor. "+ noantri[0] + ",. "+noantri[1]+" "+noantri[2]+" "+noantri[3]+", Silahkan ke Loket 1.";
-			tts(txt);
+			var txt = "Antrian Nomor. "+ noantri[0] + ",. "+noantri[1]+" "+noantri[2]+" "+noantri[3]+", Silahkan ke Loket Pelayanan Integrasi.";
+			//var txt = "wbp"+noantri[1]+noantri[2]+noantri[3];
+			//tts(txt);
+			$.ajax({url: "<?= base_url(); ?>/addtts/<?= $antrian['id'];?>/"+txt, success: function(data){ if(data!="true"){alert(data);}}});
+			
 		}});
 
 	}
@@ -117,12 +117,16 @@
 			var len = data.length;
 			if(data > parseInt(antrianmax.val())){
 				//alert();
-				$('#btnext').prop('disabled',false);
 				$('#antrianmax').val(data);
 			}
-			
+			else if (data <= parseInt(antrian.val())){
+				$('#btnext').prop('disabled',true);
+			}
+			else {
+				$('#btnext').prop('disabled',false);
+			}
 			$('#prefixantrianmax').html(prefix[len] + a);
 		}});
-	}, 3000);
+	}, 1000);
 	
 </script>

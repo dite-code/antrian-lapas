@@ -20,16 +20,16 @@
 				<b><div id="txtvirtual" class="text60"><?= $antrian['virtual']-1; ?></div></b>
 			</div>
 			<div class="col-12 text-center bg-light m-2 round25">
-				<h3>Pengunjung Barang</h3>
+				<h3>Penitipan Barang</h3>
 				<b><div id="txtbarang" class="text60"><?= $antrian['barang']-1; ?></div></b>				
 			</div>			
 			<div class="col-12 text-center bg-light m-2 round25">
-				<h3>Pengunjung WBP</h3>
+				<h3>Pelayanan Integrasi</h3>
 				<b><div id="txtwbp" class="text60"><?= $antrian['wbp']-1; ?></div></b>
 			</div>
 			
 			<div class="col-12 text-center bg-light m-2 round25">
-				<h3>Pengunjung Kantor</h3>
+				<h3>Tamu Dinas</h3>
 				<b><div id="txtkantor" class="text60"><?= $antrian['kantor']-1; ?></div></b>
 			</div>
 

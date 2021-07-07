@@ -35,7 +35,7 @@
 		//alert($('#antrian').val());
 		var len = antrian.val().length;
 		noantri = prefix[len]+antrian.val(); 
-		var txt = "Antrian Nomor. "+ noantri[0] + ",. "+noantri[1]+" "+noantri[2]+" "+noantri[3]+", Silahkan ke Loket 1.";
+		var txt = "Antrian Nomor. "+ noantri[0] + ",. "+noantri[1]+" "+noantri[2]+" "+noantri[3]+", Silahkan ke Loket Kunjungan Virtual.";
 		//alert(txt);
 		
 		//tts(txt);
@@ -77,7 +77,7 @@
 			}
 			var len = antrian.val().length;
 			noantri = prefix[len]+antrian.val(); 
-			var txt = "Antrian Nomor. "+ noantri[0] + ",. "+noantri[1]+" "+noantri[2]+" "+noantri[3]+", Silahkan ke Loket 1.";
+			var txt = "Antrian Nomor. "+ noantri[0] + ",. "+noantri[1]+" "+noantri[2]+" "+noantri[3]+", Silahkan ke Loket Kunjungan Virtual.";
 			//var txt = "virtual"+noantri[1]+noantri[2]+noantri[3];
 			//tts(txt);
 			$.ajax({url: "<?= base_url(); ?>/addtts/<?= $antrian['id'];?>/"+txt, success: function(data){ if(data!="true"){alert(data);}}});
